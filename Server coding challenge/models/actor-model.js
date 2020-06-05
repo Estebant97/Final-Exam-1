@@ -28,6 +28,17 @@ const Actors = {
                 .catch( err => {
                     throw new Error( err );
                 });
+    }, 
+    getActorById : function( actor_ID ){
+        return actorsCollection
+        //tengo la duda del findOne
+            .findOne({actor_ID: actor_ID})
+            .then( actor => {
+                return actor;
+            })
+            .catch( err => {
+                throw new Error( err );
+            })
     }
     /*
         Your code goes here

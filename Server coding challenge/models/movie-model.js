@@ -37,10 +37,30 @@ const Movies = {
                 .catch( err => {
                     throw new Error( err );
                 });
+    }, 
+    getMovieById : function (movie_ID){
+        return moviesCollection
+            .findOne( { movie_ID: movie_ID} )
+            .then( movie => {
+                return movie;
+            })
+            .catch( err => {
+                throw new Error( err );
+            })
+    },
+    removeActorFromMovieList : function( movieId, actorId ){
+        return moviesCollection
+        // checar esto faltaria hacer un populate para sacar la info de la movie
+        .findByIdAndUpdate({movie_ID : movieId}, {$pull : {actorId: actors._id}} , null)
+        .populate( 'actors', 'firstName lastName')
+        .then( deletedActor => {
+            return deletedActor;
+        })  
+        .catch( err => {
+            throw new Error( err );
+        })
     }
-    /*
-        Your code goes here
-    */
+    // here goes the PATCH to delete -- might need to use $pull : {id , null }
 }
 
 module.exports = {
